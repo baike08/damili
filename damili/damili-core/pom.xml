@@ -14,7 +14,6 @@
         <groupId>cn.damili</groupId>
         <artifactId>damili</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
   </parent>
 
   <properties>
