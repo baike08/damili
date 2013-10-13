@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="NlbUser" >
+
+  <typeAlias alias="nlbUserDO" type="cn.damili.dal.dataobject.NlbUserDO" />
+  <typeAlias alias="nlbUserQuery" type="cn.damili.dal.query.NlbUserQuery" />
+
+  <resultMap id="nlbUserDOResultMap" class="nlbUserDO" >
+    <result property="userId" column="user_id" />
+    <result property="userNick" column="user_nick" />
+    <result property="userPic" column="user_pic" />
+    <result property="userType" column="user_type" />
+    <result property="userFlags" column="user_flags" />
+    <result property="userEmail" column="user_email" />
+    <result property="userContact" column="user_contact" />
+    <result property="userStatus" column="user_status" />
+    <result property="createTime" column="create_time" />
+    <result property="modifyTime" column="modify_time" />
+  </resultMap>
+
+
+  <sql id="nlbUser_do_columns" >
+    a1.user_id, a1.user_nick, a1.user_pic, a1.user_type, a1.user_flags, a1.user_email, 
+      a1.user_contact, a1.user_status, a1.create_time, a1.modify_time
+  </sql>
+
+  <sql id="queryParams" >
+    <dynamic prepend="WHERE" >
+      <isNotNull property="userId" prepend="AND" >
+        <![CDATA[  
+        user_id = #userId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="userNick" prepend="AND" >
+        <![CDATA[  
+        user_nick = #userNick#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="userPic" prepend="AND" >
+        <![CDATA[  
+        user_pic = #userPic#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="userType" prepend="AND" >
+        <![CDATA[  
+        user_type = #userType#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="userFlags" prepend="AND" >
+        <![CDATA[  
+        user_flags = #userFlags#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="userEmail" prepend="AND" >
+        <![CDATA[  
+        user_email = #userEmail#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="userContact" prepend="AND" >
+        <![CDATA[  
+        user_contact = #userContact#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="userStatus" prepend="AND" >
+        <![CDATA[  
+        user_status = #userStatus#  
+        ]]>  
+      </isNotNull>
+    </dynamic>
+  </sql>
+
+
+  <insert id="insert" parameterClass="nlbUserDO" >
+    INSERT INTO nlb_user( user_id, user_nick, user_pic, user_type, user_flags, user_email, 
+      user_contact, user_status, create_time, modify_time)
+     VALUES ( #userId#, #userNick#, #userPic#, #userType#, #userFlags#, #userEmail#, 
+      #userContact#, #userStatus#, now(), now())
+    <selectKey keyProperty="userId" resultClass="java.lang.Integer" >
+      SELECT LAST_INSERT_ID() AS value
+    </selectKey>
+  </insert>
+
+  <update id="update" parameterClass="nlbUserDO" >
+    UPDATE nlb_user   
+    <dynamic prepend="SET" >
+      <!--
+      <isNotNull property="userId" prepend="," >
+        <![CDATA[  
+        user_id = #userId#  
+        ]]>  
+      </isNotNull>
+      -->
+      <isNotNull property="userNick" prepend="," >
+        <![CDATA[  
+        user_nick = #userNick#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="userPic" prepend="," >
+        <![CDATA[  
+        user_pic = #userPic#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="userType" prepend="," >
+        <![CDATA[  
+        user_type = #userType#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="userFlags" prepend="," >
+        <![CDATA[  
+        user_flags = #userFlags#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="userEmail" prepend="," >
+        <![CDATA[  
+        user_email = #userEmail#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="userContact" prepend="," >
+        <![CDATA[  
+        user_contact = #userContact#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="userStatus" prepend="," >
+        <![CDATA[  
+        user_status = #userStatus#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="modifyTime" prepend="," >
+        <![CDATA[  
+        modify_time = #modifyTime#  
+        ]]>  
+      </isNotNull>
+    </dynamic>
+     WHERE user_id = #userId#  
+  </update>
+
+  <select id="get" parameterClass="java.lang.Integer" resultMap="nlbUserDOResultMap" >
+     SELECT 
+    <include refid="nlbUser_do_columns" />
+    <![CDATA[  
+     FROM nlb_user a1 WHERE user_id = #userId#
+    ]]>  
+  </select>
+
+  <delete id="delete" parameterClass="java.lang.Integer" >
+    <![CDATA[  
+     DELETE FROM nlb_user WHERE user_id = #userId#
+    ]]>  
+  </delete>
+
+
+  <select id="count" parameterClass="nlbUserQuery" resultClass="java.lang.Integer" >
+    SELECT COUNT(user_id) AS num FROM nlb_user 
+    <include refid="queryParams" />
+  </select>
+
+  <select id="list" resultMap="nlbUserDOResultMap" parameterClass="nlbUserQuery" >
+     SELECT 
+    <include refid="nlbUser_do_columns" />
+     FROM nlb_user a1 
+    <include refid="queryParams" />
+  </select>
+</sqlMap>

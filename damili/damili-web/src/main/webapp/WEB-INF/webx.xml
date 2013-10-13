@@ -41,6 +41,10 @@
 
     <!-- URI生成。 -->
     <beans:import resource="common/uris.xml" />
+    
+    
+    <beans:import resource="classpath:conf/damili-biz.application.xml" />
+    <beans:import resource="classpath:conf/damili-core.application.xml" />
 
     <!-- 综合设置。 -->
     <services:webx-configuration>

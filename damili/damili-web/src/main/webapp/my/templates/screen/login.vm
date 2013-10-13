@@ -1,0 +1,3 @@
+<div>
+ <img src="random_image.do" onclick="changeValidateCode(this)"/>
+</div>

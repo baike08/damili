@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="NlbWeb" >
+
+  <typeAlias alias="nlbWebDO" type="cn.damili.dal.dataobject.NlbWebDO" />
+  <typeAlias alias="nlbWebQuery" type="cn.damili.dal.query.NlbWebQuery" />
+
+  <resultMap id="nlbWebDOResultMap" class="nlbWebDO" >
+    <result property="id" column="id" />
+    <result property="webUrl" column="web_url" />
+    <result property="webName" column="web_name" />
+    <result property="webDesc" column="web_desc" />
+    <result property="webStatus" column="web_status" />
+    <result property="createTime" column="create_time" />
+    <result property="modifyTime" column="modify_time" />
+    <result property="webSnapshot" column="web_snapshot" />
+  </resultMap>
+
+  <resultMap id="nlbWebQueryResultMap" class="nlbWebQuery" >
+    <result property="id" column="id" />
+    <result property="webUrl" column="web_url" />
+    <result property="webName" column="web_name" />
+    <result property="webStatus" column="web_status" />
+    <result property="webSnapshot" column="web_snapshot" />
+  </resultMap>
+
+
+  <sql id="nlbWeb_do_columns" >
+    a1.id, a1.web_url, a1.web_name, a1.web_desc, a1.web_status, a1.create_time, a1.modify_time, 
+      a1.web_snapshot
+  </sql>
+
+  <sql id="queryParams" >
+    <dynamic prepend="WHERE" >
+      <isNotNull property="id" prepend="AND" >
+        <![CDATA[  
+        id = #id#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="webUrl" prepend="AND" >
+        <![CDATA[  
+        web_url = #webUrl#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="webName" prepend="AND" >
+        <![CDATA[  
+        web_name = #webName#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="webDesc" prepend="AND" >
+        <![CDATA[  
+        web_desc = #webDesc#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="webStatus" prepend="AND" >
+        <![CDATA[  
+        web_status = #webStatus#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="webSnapshot" prepend="AND" >
+        <![CDATA[  
+        web_snapshot = #webSnapshot#  
+        ]]>  
+      </isNotNull>
+    </dynamic>
+  </sql>
+
+  <insert id="insert" parameterClass="nlbWebDO" >
+    INSERT INTO nlb_web( id, web_url, web_name, web_desc, web_status, create_time, modify_time, 
+      web_snapshot)
+     VALUES ( #id#, #webUrl#, #webName#, #webDesc#, #webStatus#, now(), now(), 
+      #webSnapshot#)
+    <selectKey keyProperty="id" resultClass="java.lang.Integer" >
+      SELECT LAST_INSERT_ID() AS value
+    </selectKey>
+  </insert>
+
+  <update id="update" parameterClass="nlbWebDO" >
+    UPDATE nlb_web   
+    <dynamic prepend="SET" >
+      <!--
+      <isNotNull property="id" prepend="," >
+        <![CDATA[  
+        id = #id#  
+        ]]>  
+      </isNotNull>
+      -->
+      <isNotNull property="webUrl" prepend="," >
+        <![CDATA[  
+        web_url = #webUrl#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="webName" prepend="," >
+        <![CDATA[  
+        web_name = #webName#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="webDesc" prepend="," >
+        <![CDATA[  
+        web_desc = #webDesc#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="webStatus" prepend="," >
+        <![CDATA[  
+        web_status = #webStatus#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="webSnapshot" prepend="," >
+        <![CDATA[  
+        web_snapshot = #webSnapshot#  
+        ]]>  
+      </isNotNull>
+    </dynamic>
+     WHERE id = #id#  
+  </update>
+
+  <select id="get" parameterClass="java.lang.Integer" resultMap="nlbWebDOResultMap" >
+     SELECT 
+    <include refid="nlbWeb_do_columns" />
+    <![CDATA[  
+     FROM nlb_web a1 WHERE id = #id#
+    ]]>  
+  </select>
+
+  <delete id="delete" parameterClass="java.lang.Integer" >
+    <![CDATA[  
+     DELETE FROM nlb_web WHERE id = #id#
+    ]]>  
+  </delete>
+
+
+  <select id="countByQueryExample" parameterClass="nlbWebQuery" resultClass="java.lang.Integer" >
+    SELECT COUNT(id) AS num FROM nlb_web 
+    <include refid="queryParams" />
+  </select>
+
+  <select id="list" resultMap="nlbWebDOResultMap" parameterClass="nlbWebQuery" >
+     SELECT 
+    <include refid="nlbWeb_do_columns" />
+     FROM nlb_web a1 
+    <include refid="queryParams" />
+  </select>
+</sqlMap>

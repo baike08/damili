@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="NlbLogin" >
+
+  <typeAlias alias="nlbLoginDO" type="cn.damili.dal.dataobject.NlbLoginDO" />
+  <typeAlias alias="nlbLoginQuery" type="cn.damili.dal.query.NlbLoginQuery" />
+
+  <resultMap id="nlbLoginDOResultMap" class="nlbLoginDO" >
+    <result property="id" column="id" />
+    <result property="userId" column="user_id" />
+    <result property="loginId" column="login_id" />
+    <result property="loginType" column="login_type" />
+    <result property="loginStatus" column="login_status" />
+    <result property="loginPwd" column="login_pwd" />
+    <result property="loginTime" column="login_time" />
+  </resultMap>
+
+  <sql id="nlbLogin_do_columns" >
+    a1.id, a1.user_id, a1.login_id, a1.login_type, a1.login_status, a1.login_pwd, a1.login_time
+      
+  </sql>
+
+
+  <sql id="queryParams" >
+    <dynamic prepend="WHERE" >
+      <isNotNull property="id" prepend="AND" >
+        <![CDATA[  
+        id = #id#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="userId" prepend="AND" >
+        <![CDATA[  
+        user_id = #userId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="loginId" prepend="AND" >
+        <![CDATA[  
+        login_id = #loginId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="loginType" prepend="AND" >
+        <![CDATA[  
+        login_type = #loginType#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="loginStatus" prepend="AND" >
+        <![CDATA[  
+        login_status = #loginStatus#  
+        ]]>  
+      </isNotNull>
+    </dynamic>
+  </sql>
+
+  <insert id="insert" parameterClass="nlbLoginDO" >
+    INSERT INTO nlb_login( id, user_id, login_id, login_type, login_status, login_pwd, login_time
+      )
+     VALUES ( #id#, #userId#, #loginId#, #loginType#, #loginStatus#, #loginPwd#, #loginTime#
+      )
+    <selectKey keyProperty="id" resultClass="java.lang.Integer" >
+      SELECT LAST_INSERT_ID() AS value
+    </selectKey>
+  </insert>
+
+  <update id="update" parameterClass="nlbLoginDO" >
+    UPDATE nlb_login   
+    <dynamic prepend="SET" >
+      <!--
+      <isNotNull property="id" prepend="," >
+        <![CDATA[  
+        id = #id#  
+        ]]>  
+      </isNotNull>
+      -->
+      <isNotNull property="userId" prepend="," >
+        <![CDATA[  
+        user_id = #userId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="loginId" prepend="," >
+        <![CDATA[  
+        login_id = #loginId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="loginType" prepend="," >
+        <![CDATA[  
+        login_type = #loginType#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="loginStatus" prepend="," >
+        <![CDATA[  
+        login_status = #loginStatus#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="loginPwd" prepend="," >
+        <![CDATA[  
+        login_pwd = #loginPwd#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="loginTime" prepend="," >
+        <![CDATA[  
+        login_time = #loginTime#  
+        ]]>  
+      </isNotNull>
+    </dynamic>
+     WHERE id = #id#  
+  </update>
+
+  <select id="get" parameterClass="java.lang.Integer" resultMap="nlbLoginDOResultMap" >
+     SELECT 
+    <include refid="nlbLogin_do_columns" />
+    <![CDATA[  
+     FROM nlb_login a1 WHERE id = #id#
+    ]]>  
+  </select>
+
+  <delete id="delete" parameterClass="java.lang.Integer" >
+    <![CDATA[  
+     DELETE FROM nlb_login WHERE id = #id#
+    ]]>  
+  </delete>
+
+  <select id="count" parameterClass="nlbLoginQuery" resultClass="java.lang.Integer" >
+    SELECT COUNT(id) AS num FROM nlb_login 
+    <include refid="queryParams" />
+  </select>
+
+  <select id="list" resultMap="nlbLoginDOResultMap" parameterClass="nlbLoginQuery" >
+     SELECT 
+    <include refid="nlbLogin_do_columns" />
+     FROM nlb_login a1 
+    <include refid="queryParams" />
+  </select>
+</sqlMap>

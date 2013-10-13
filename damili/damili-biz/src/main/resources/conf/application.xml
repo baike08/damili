@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//UTF-8" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans default-autowire="byName">
+    <bean class="cn.damili.common.conf.ContextConf" />
+	<import resource="classpath:conf/dal-dao.xml"/>
+</beans>

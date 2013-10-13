@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//UTF-8" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="UTF-8">
+<head>
+#showHead ("大米粒")
+</head>
+
+ <script type="text/javascript">
+    function changeValidateCode(obj) {
+        var timenow = new Date().getTime();
+        obj.src="random_image.do?d="+timenow;
+    }
+</script>
+
+<body #bodyAttributes ()>
+
+$screen_placeholder
+
+<hr/>
+<p>[<a href="$app1Link.setTarget("index")">Home</a>] [<a href="$app1Link">Dev Home</a>]</p>
+
+
+</body>
+</html>
